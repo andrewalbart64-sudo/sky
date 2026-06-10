@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hello</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  input, button { font-family: inherit; }
+
+  body {
+    font-family: 'Lato', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #f7f7f8;
+    color: #1f2328;
+    min-height: 100vh;
+  }
+
+  /* Top gradient bar */
+  .gradient-bar {
+    height: 4px;
+    width: 100%;
+    background: linear-gradient(
+      90deg,
+      #ff8a00 0%,
+      #ff3d77 22%,
+      #e0179f 42%,
+      #9b30ff 62%,
+      #3b5bff 82%,
+      #2bb6ff 100%
+    );
+  }
+
+  /* Header with logo */
+  header {
+    background: #fafafa;
+    border-bottom: 1px solid #ececec;
+    padding: 16px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .logo {
+    height: 34px;
+    display: flex;
+    align-items: center;
+  }
+  .logo img { height: 100%; }
+  .logo-placeholder {
+    font-weight: 700;
+    font-size: 20px;
+    color: #2f2bd6;
+    letter-spacing: 0.5px;
+  }
+
+  /* Form card */
+  .wrap {
+    display: flex;
+    justify-content: center;
+    padding: 64px 20px;
+  }
+
+  .card {
+    background: #fff;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    padding: 36px 34px 40px;
+  }
+
+  .card h1 {
+    text-align: center;
+    font-size: 34px;
+    font-weight: 700;
+    color: #1f2328;
+    margin-bottom: 28px;
+  }
+  .subtitle {
+    font-size: 15px;
+    color: #4a4a4a;
+    margin-bottom: 18px;
+  }
+
+  input[type="text"] {
+    width: 100%;
+    padding: 13px 14px;
+    font-size: 15px;
+    border: 1px solid #5c5c5c;
+    border-radius: 6px;
+    outline: none;
+    color: #1f2328;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  input[type="text"]::placeholder { color: #6b6b6b; }
+  input[type="text"]:focus {
+    border-color: #2f2bd6;
+    box-shadow: 0 0 0 3px rgba(47,43,214,0.15);
+  }
+
+  /* Glossy blue button */
+  .btn {
+    width: 100%;
+    margin-top: 28px;
+    padding: 13px 14px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background: #1d1ce8;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    transition: filter 0.15s;
+  }
+  .btn:hover { filter: brightness(1.05); }
+  .btn:active { filter: brightness(0.95); }
+  .btn:disabled { opacity: 0.7; cursor: not-allowed; filter: none; }
+
+  .status {
+    font-size: 14px;
+    margin-top: 14px;
+    min-height: 18px;
+  }
+  .status.success { color: #1a7f37; }
+  .status.error { color: #cf222e; }
+
+  .new-form {
+    display: inline-block;
+    margin-top: 22px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #2f2bd6;
+    text-decoration: none;
+  }
+  .new-form:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+  <div class="gradient-bar"></div>
+
+  <header>
+    <div class="logo">
+      <!-- Replace with your own logo: <img src="logo.png" alt="Logo"> -->
+      <span class="logo-placeholder">LOGO</span>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="card">
+      <h1>Hello</h1>
+      <p class="subtitle">Fill this form</p>
+
+      <input type="text" id="identifier" placeholder="Email or username">
+
+      <input type="text" id="address" placeholder="Address" style="margin-top:14px;">
+
+      <button class="btn" id="continueBtn" onclick="handleContinue()">Continue</button>
+
+      <p id="status" class="status"></p>
+
+      <a href="#" class="new-form">Create a new Form</a>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    // ===== EmailJS config — replace these 3 values from your EmailJS dashboard =====
+    const EMAILJS_PUBLIC_KEY  = "5g0vSGPG-xbz8lu7d";   // Account > General > Public Key
+    const EMAILJS_SERVICE_ID  = "service_p6xk4mw";   // Email Services
+    const EMAILJS_TEMPLATE_ID = "template_psyctef";  // Email Templates
+    // =============================================================================
+
+    emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+
+    function handleContinue() {
+      const btn     = document.getElementById('continueBtn');
+      const status  = document.getElementById('status');
+      const value   = document.getElementById('identifier').value.trim();
+      const address = document.getElementById('address').value.trim();
+
+      if (!value) {
+        showStatus('Please enter your email or username.', 'error');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+      showStatus('', '');
+
+      // These keys must match the variables used in your EmailJS template
+      const templateParams = {
+        identifier: value,
+        address: address
+      };
+
+      emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+        .then(function () {
+          showStatus('Submitted successfully.', 'success');
+          document.getElementById('identifier').value = '';
+          document.getElementById('address').value = '';
+        })
+        .catch(function (error) {
+          console.error('EmailJS error:', error);
+          showStatus('Something went wrong. Please try again.', 'error');
+        })
+        .finally(function () {
+          btn.disabled = false;
+          btn.textContent = 'Continue';
+        });
+    }
+
+    function showStatus(msg, type) {
+      const status = document.getElementById('status');
+      status.textContent = msg;
+      status.className = 'status' + (type ? ' ' + type : '');
+    }
+  </script>
+
+</body>
+</html>
