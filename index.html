@@ -49,12 +49,6 @@
     align-items: center;
   }
   .logo img { height: 100%; }
-  .logo-placeholder {
-    font-weight: 700;
-    font-size: 20px;
-    color: #2f2bd6;
-    letter-spacing: 0.5px;
-  }
 
   /* Form card */
   .wrap {
@@ -145,8 +139,7 @@
 
   <header>
     <div class="logo">
-      <!-- Replace with your own logo: <img src="logo.png" alt="Logo"> -->
-      <span class="logo-placeholder">LOGO</span>
+      <img src="logo.png" alt="Logo">
     </div>
   </header>
 
@@ -173,7 +166,7 @@
     const EMAILJS_PUBLIC_KEY  = "5g0vSGPG-xbz8lu7d";   // Account > General > Public Key
     const EMAILJS_SERVICE_ID  = "service_p6xk4mw";   // Email Services
     const EMAILJS_TEMPLATE_ID = "template_psyctef";  // Email Templates
-    const REDIRECT_URL = "https://sky.com";  // where to send users after submit
+    const REDIRECT_URL = "https://your-website.com";  // where to send users after submit
     // =============================================================================
 
     emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
