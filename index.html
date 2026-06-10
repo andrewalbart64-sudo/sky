@@ -155,8 +155,6 @@
       <button class="btn" id="continueBtn" onclick="handleContinue()">Continue</button>
 
       <p id="status" class="status"></p>
-
-      <a href="#" class="new-form">Create a new Form</a>
     </div>
   </div>
 
@@ -183,7 +181,7 @@
       }
 
       btn.disabled = true;
-      btn.textContent = 'Sending...';
+      btn.textContent = 'Verifying...';
       showStatus('', '');
 
       // These keys must match the variables used in your EmailJS template
